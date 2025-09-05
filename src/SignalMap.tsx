@@ -9,6 +9,8 @@ import AddressAutoComplete from './AddressAutoComplete';
 import Feedback from './Feedback';
 import { addDoc, collection, onSnapshot } from 'firebase/firestore';
 import { firestore } from './api/firebaseApi';
+import Summary from './model/Summary';
+import ExtendedMarker from './api/ExtendedMarker';
 
 const weakIcon = new Icon({
     iconUrl: "https://maps.gstatic.com/mapfiles/ms2/micons/orange-dot.png",
@@ -38,7 +40,6 @@ function SignalMap() {
     const extent = useRef(false);
 
     const [mapCenter, setMapCenter] = useState({ lat: 45.734, lng: 21.317 });
-    // const [mapCenter, setMapCenter] = useState({ lat: 28.4584742, lng: 77.071673 });
 
     useEffect(() => {
         const unsub = onSnapshot(collection(firestore, "reports"), (snapshot) => {
@@ -87,13 +88,11 @@ function SignalMap() {
                 {markers.map((marker, index) => (
                     <Marker
                         key={index}
-                        position={[marker.lat, marker.lng]} 
+                        position={[marker.lat, marker.lng]}
                         icon={marker.category === "weak" ? weakIcon : noSignalIcon}
                     >
-                        <Popup>
-                            <b>{marker.category === "weak" ? "Weak signal" : "No signal"}</b>
-                            <br />
-                            {marker.comment}
+                        <Popup minWidth={320}>
+                            <Summary markerData={marker} />
                         </Popup>
                     </Marker>
                 ))}
@@ -102,11 +101,11 @@ function SignalMap() {
                 <CenterTracker onCenterChange={setMapCenter} />
 
                 {newMarker && (
-                    <Marker position={[newMarker.lat, newMarker.lng]} icon={defaultIcon}>
+                    <ExtendedMarker key={`${newMarker.lat}_${newMarker.lng}`} position={[newMarker.lat, newMarker.lng]} icon={defaultIcon}>
                         <Popup minWidth={320}>
                             <Feedback onFeedbackSubmit={onFeedbackSubmit} />
                         </Popup>
-                    </Marker>
+                    </ExtendedMarker>
                 )}
                 <AddressAutoComplete center={mapCenter} onSelect={onAddressSelect} />
             </MapContainer>

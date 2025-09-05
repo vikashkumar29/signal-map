@@ -60,7 +60,7 @@ function AddressAutoComplete({ center, onSelect }: AddressAutoCompleteProps) {
     return (
         <IconField iconPosition='left' className='absolute right-3 top-3 z-[500]' >
             <InputIcon className="pi pi-search z-[500]" />
-            <AutoComplete pt={{ input: { root: { className: 'shadow-lg w-full rounded-xl pl-8' } } }}
+            <AutoComplete pt={{ input: { root: { className: 'shadow-lg w-full pl-8' } } }}
                 value={value}
                 suggestions={suggestions}
                 completeMethod={searchApi}

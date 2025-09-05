@@ -1,19 +1,19 @@
-import { Card } from "primereact/card";
 import SignalMap from './SignalMap';
+import { Panel } from 'primereact/panel';
 
 function App() {
   
 
   return (
     <div className='m-4 flex flex-grow'>
-      <Card title="Moșnița Signal Map" className='h-full w-full border border-gray-300 rounded-xl'
+      <Panel header="Moșnița Signal Map" className='flex flex-col flex-grow border border-gray-300'
         pt={{
-          body: { className: 'h-full flex flex-col p-0 pt-4' },
+          toggleableContent: { className: 'h-full' },
           content: { className: 'h-full flex flex-col p-0 relative' },
           title: { className: 'px-4' }
         }}>
         <SignalMap />
-      </Card>
+      </Panel>
     </div>
   )
 }
