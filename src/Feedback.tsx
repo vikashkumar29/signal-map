@@ -16,12 +16,12 @@ function Feedback({ onFeedbackSubmit }: FeedbackProps) {
 
     const submitFeedback = (event: MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
-        onFeedbackSubmit({ category: selectedCategory, comment: value })
+        onFeedbackSubmit({ category: selectedCategory, comment: value });
     };
 
     return (
         <div className="w-full flex flex-col">
-            <h2 className='font-bold mb-2'>Report Signal Issue:</h2>
+            <h2 className='font-bold mb-2 text-xl'>Report Signal Issue:</h2>
             <div className='flex flex-col gap-2'>
                 <div className="flex items-center">
                     <RadioButton inputId='weak' name="strength" value='weak' onChange={(e) => setSelectedCategory(e.value)} checked={selectedCategory === 'weak'} />
