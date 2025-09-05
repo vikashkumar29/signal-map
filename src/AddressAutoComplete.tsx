@@ -11,7 +11,7 @@ export interface AddressAutoCompleteProps {
 }
 
 function AddressAutoComplete({ center, onSelect }: AddressAutoCompleteProps) {
-    const [value, setValue] = useState<string | null>(null);
+    const [value, setValue] = useState('');
     const [suggestions, setSuggestions] = useState<Address[]>([]);
     const [query, setQuery] = useState('');
     const [debouncedQuery, setDebouncedQuery] = useState(query);
@@ -64,7 +64,7 @@ function AddressAutoComplete({ center, onSelect }: AddressAutoCompleteProps) {
                 value={value}
                 suggestions={suggestions}
                 completeMethod={searchApi}
-                onChange={(e) => setValue(e.value)}
+                onChange={(e) => setValue(e.value as unknown as string)}
                 onSelect={(e) => e.value && onAddressSelect(e.value as Address)}
                 field="displayName"
                 className='w-96' placeholder='Search Map' />
