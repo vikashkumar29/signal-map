@@ -1,6 +1,6 @@
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
-import { useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import AddMarker from './AddMarker';
 import { Icon, latLngBounds, Map } from 'leaflet';
 import type { Address, FeedbackData, LatLng, MarkerData } from './model/model';
@@ -32,7 +32,11 @@ const defaultIcon = new Icon({
     popupAnchor: [0, -41],
 });
 
-function SignalMap() {
+export interface SignalMapHandle {
+    markers: MarkerData[];
+}
+
+const SignalMap = forwardRef((_, ref) => {
     const [markers, setMarkers] = useState<MarkerData[]>([]);
     const [newMarker, setNewMarker] = useState<LatLng | null>(null);
 
@@ -40,6 +44,10 @@ function SignalMap() {
     const extent = useRef(false);
 
     const [mapCenter, setMapCenter] = useState({ lat: 45.734, lng: 21.317 });
+
+    useImperativeHandle(ref, () => ({
+        markers,
+    }), [markers]);
 
     useEffect(() => {
         const unsub = onSnapshot(collection(firestore, "reports"), (snapshot) => {
@@ -111,6 +119,6 @@ function SignalMap() {
             </MapContainer>
         </>
     )
-}
+});
 
 export default SignalMap;
